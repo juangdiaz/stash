@@ -1,5 +1,7 @@
 package com.juangdiaz.apptest;
 
+import com.juangdiaz.apptest.view.fragment.UserFragment;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -11,5 +13,5 @@ import dagger.Component;
 @Singleton
 @Component(modules = { AppModule.class })
 public interface AppComponent {
-   // void inject(someActivity/Fragment target); // fix this
+    void inject(UserFragment target);
 }
