@@ -1,5 +1,21 @@
 <resources>
-    <string name="app_name">App Test</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Share my location</string>
+    <string name="action_history">My History</string>
+    <string name="intro_message">Select a Location you will like to share with your contacts</string>
+    <string name="open_activity">Select Location</string>
+    <string name="selected_place">Last Selected Place:</string>
+    <string name="place_details">
+    <![CDATA[
+        <b>%1$s</b>
+        <br/>
+        Address: %2$s
+        <br/>
+        Phone: %3$s
+        <br/>
+        Website: %4$s
+    ]]>
+    </string>
+
+    <string name="google_geo_api_key">AIzaSyAKzjfxUDtviOzKLRjZGfnc3hpWL6XHvnc</string>
+    <string name="google_maps_api_key">AIzaSyDdZknYtZ7xr6cGhiCKITjGB9rLWQnk470</string>
 </resources>

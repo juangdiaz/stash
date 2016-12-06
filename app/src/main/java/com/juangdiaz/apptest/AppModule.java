@@ -15,13 +15,23 @@ import dagger.Provides;
  */
 @Module
 public class AppModule {
+
+    //private Application application;
+
     @Provides @Singleton
     public UserRepository provideUserRepository() {
+
         return new InSharePrefsUserRepositoryImpl();
     }
 
+   /* @Provides @Singleton
+    public Context provideContext(){
+        return application;
+    }
+*/
     @Provides
     public UserPresenter provideUserPresenter(UserRepository userRepository) {
+
         return new UserPresenterImpl(userRepository);
     }
 }

@@ -1,8 +1,15 @@
 package com.juangdiaz.apptest.view;
 
+import com.juangdiaz.apptest.model.User;
+
+import java.util.List;
+
 /**
- * @author juandiaz <juandiaz@us.univision.com> Android Developer
- *         Copyright (C) 2016, Univision Communications Inc.
+ * @author juandiaz <juan@juangdiaz.com> Android Developer
  */
 public interface UserView {
+
+    void displayUsers(List<User> userList);
+    void showLoadingLayout();
+    void hideLoadingLayout();
 }

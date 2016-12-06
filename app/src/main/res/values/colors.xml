@@ -2,5 +2,24 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#00E676</color>
+
+    <color name="background">#FFF8F8F8</color>
+    <color name="card_background">#FFFFFFFF</color>
+    <color name="text_view_empty">#888888</color>
+
+    <color name="background_selected">#FFF0FCF0</color>
+
+    <color name="space_white">#FFFFFFFF</color>
+    <color name="space_black">#FF000000</color>
+    <color name="space_grey">#FF888888</color>
+
+    <color name="background_snackbar_error">#FF0000</color>
+
+    <color name="faded_black">#AA000000</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="oc_color">#31313F</color>
+
 </resources>
