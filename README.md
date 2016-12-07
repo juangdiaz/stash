@@ -30,6 +30,22 @@ Create a social app for sharing a location’s information with friends. The app
 *  [Permiso](https://github.com/greysonp/permiso) Permissions
 
 
+
+**Nice to haves:**
+
+Because of Time constrains this are a list of nice to haves:
+
+- MVP, (Mokito and Robelectric) and Dagger 2. 
+- encrypt Phone Number (when sharing number, in deep link)
+- Onboarding Activity (show the user how to use the App
+- Beer :beers: :beers: :beers: :beers: :beers:
+
+
+
+
+
+
+
 Images
 =======
 **Contacts**
