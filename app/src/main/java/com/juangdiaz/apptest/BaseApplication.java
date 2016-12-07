@@ -12,7 +12,6 @@ import io.realm.RealmConfiguration;
  */
 public class BaseApplication extends Application {
 
-    private AppComponent component;
 
     @Override
     public void onCreate() {
@@ -30,14 +29,8 @@ public class BaseApplication extends Application {
         //Make this realm the default
         Realm.setDefaultConfiguration(realmConfiguration);
 
-        component = DaggerAppComponent.builder().appModule(new AppModule()).build();
-
+        //Init Contacts Lib
         Contacts.initialize(this);
 
-    }
-
-    public AppComponent getComponent() {
-
-        return  component;
     }
 }

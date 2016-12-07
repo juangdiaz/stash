@@ -2,6 +2,7 @@ package com.juangdiaz.apptest.view.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -16,30 +17,27 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.tamir7.contacts.Contact;
+import com.github.tamir7.contacts.Contacts;
+import com.github.tamir7.contacts.Query;
 import com.greysonparrelli.permiso.Permiso;
-import com.juangdiaz.apptest.BaseApplication;
 import com.juangdiaz.apptest.R;
 import com.juangdiaz.apptest.adapter.UserListAdapter;
 import com.juangdiaz.apptest.model.User;
-import com.juangdiaz.apptest.presenter.UserPresenter;
-import com.juangdiaz.apptest.view.UserView;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * @author juandiaz <juan@juangdiaz.com> Android Developer
  */
-public class MainActivity extends AppCompatActivity  implements UserView {
-
-    @Inject
-    UserPresenter userPresenter;
-
+public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private UserListAdapter userListAdapter;
     private LinearLayoutManager linearLayoutManager;
+
+    private List<User> userList = new ArrayList<>();
 
     private ProgressBar progressBar;
 
@@ -49,8 +47,6 @@ public class MainActivity extends AppCompatActivity  implements UserView {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        ((BaseApplication) this.getApplication()).getComponent().inject(this);
 
         //Setting Activity for Permissions
         Permiso.getInstance().setActivity(this);
@@ -81,6 +77,56 @@ public class MainActivity extends AppCompatActivity  implements UserView {
         });
     }
 
+    public void loadUserDetails() {
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected void onPreExecute(){
+
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                //Load from contacts
+                Query q = Contacts.getQuery();
+                q.hasPhoneNumber();
+                q.include(Contact.Field.DisplayName, Contact.Field.Email, Contact.Field.PhoneNormalizedNumber);
+                List<Contact> contacts = q.find();
+                User user;
+
+
+                for(Contact contact : contacts ){
+                    if(contact.getPhoneNumbers().size() > 0) {
+                        user = new User();
+                        user.setFirstName(contact.getDisplayName());
+                        user.setPhoneNumb(contact.getPhoneNumbers().get(0).getNormalizedNumber());
+                        if(contact.getEmails().size() > 0){
+                            user.setEmail(contact.getEmails().get(0).getAddress());
+                        } else {
+                            user.setEmail("");
+                        }
+
+                        if(user.getPhoneNumb() != null) {
+                            userList.add(user);
+                        }
+                    }
+
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result)
+            {
+                displayUsers(userList);
+
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        }.execute((Void[]) null);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -110,13 +156,12 @@ public class MainActivity extends AppCompatActivity  implements UserView {
                         && resultSet.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         && resultSet.isPermissionGranted(Manifest.permission.READ_PHONE_STATE)) {
                     // permission granted!
-                    userPresenter.setView(MainActivity.this, MainActivity.this);
+                    loadUserDetails();
                 } else {
                     // permissions denied, exit app
                     Toast.makeText(getApplicationContext(), "All permissions are Required if you want to use this app!", Toast.LENGTH_LONG).show();
                     finish();
                 }
-
             }
 
             @Override
@@ -135,20 +180,9 @@ public class MainActivity extends AppCompatActivity  implements UserView {
         Permiso.getInstance().setActivity(this);
     }
 
-    @Override
     public void displayUsers(List<User> userList) {
         userListAdapter = new UserListAdapter(this, userList);
         recyclerView.setAdapter(userListAdapter);
-    }
-
-    @Override
-    public void showLoadingLayout() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoadingLayout() {
-        progressBar.setVisibility(View.GONE);
     }
 
     @Override
