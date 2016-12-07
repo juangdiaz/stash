@@ -59,6 +59,7 @@ public class DeepLinkActivity extends AppCompatActivity implements
     private TextView textViewPhone;
     private TextView textViewWeb;
     private TextView textViewAtt;
+    private Button openButton;
 
 
     @Override
@@ -90,50 +91,13 @@ public class DeepLinkActivity extends AppCompatActivity implements
         textViewPhone = (TextView) findViewById(R.id.phone);
         textViewWeb = (TextView) findViewById(R.id.web);
         textViewAtt = (TextView) findViewById(R.id.att);
-        Button openButton = (Button) findViewById(R.id.save_button);
+        openButton = (Button) findViewById(R.id.save_button);
 
-        //Get date from Deep Link
-        Intent intent = getIntent();
-        Uri data = intent.getData();
+        getDataFromDeepLink();
 
-        place = new Places();
+        queryContacts();
 
-        if (data.getQueryParameter("place") != null) {
-
-            place.setPlaceid(data.getQueryParameter("place"));
-        }
-        if (data.getQueryParameter("date") != null) {
-
-            Date date = new Date();
-            place.setDateSent(date);
-        }
-        if (data.getQueryParameter("phone") != null) {
-
-            phoneNumber = data.getQueryParameter("phone");
-        }
-        if (data.getQueryParameter("placename") != null) {
-
-            place.setName(data.getQueryParameter("placename")) ;
-        }
-
-        //Query contacts
-        Query q = Contacts.getQuery();
-        q.whereContains(Contact.Field.PhoneNumber, phoneNumber);
-        List<Contact> contacts = q.find();
-
-        if(contacts.get(0) != null && contacts.size() > 0){
-            sentByTextView.setText("Sent by: " + contacts.get(0).getDisplayName());
-        }
-        else {
-            sentByTextView.setText("No user found");
-            openButton.setVisibility(View.INVISIBLE);
-        }
-
-        //Fetch data from Places API
-        PendingResult<PlaceBuffer> placeResult = com.google.android.gms.location.places.Places.GeoDataApi
-                .getPlaceById(googleApiClient, place.getPlaceid());
-        placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
-        Log.i(LOG_TAG, "Fetching details for ID: " + place.getPlaceid());
+        fetchDataFromAPIPlaces();
 
 
         openButton.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +139,54 @@ public class DeepLinkActivity extends AppCompatActivity implements
         });
     }
 
+    private void fetchDataFromAPIPlaces() {
+        //Fetch data from Places API
+        PendingResult<PlaceBuffer> placeResult = com.google.android.gms.location.places.Places.GeoDataApi
+                .getPlaceById(googleApiClient, place.getPlaceid());
+        placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+        Log.i(LOG_TAG, "Fetching details for ID: " + place.getPlaceid());
+    }
+
+    private void getDataFromDeepLink() {
+        //Get date from Deep Link
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+
+        place = new Places();
+
+        if (data.getQueryParameter("place") != null) {
+
+            place.setPlaceid(data.getQueryParameter("place"));
+        }
+        if (data.getQueryParameter("date") != null) {
+
+            Date date = new Date();
+            place.setDateSent(date);
+        }
+        if (data.getQueryParameter("phone") != null) {
+
+            phoneNumber = data.getQueryParameter("phone");
+        }
+        if (data.getQueryParameter("placename") != null) {
+
+            place.setName(data.getQueryParameter("placename")) ;
+        }
+    }
+
+    private void queryContacts() {
+        //Query contacts
+        Query q = Contacts.getQuery();
+        q.whereContains(Contact.Field.PhoneNumber, phoneNumber);
+        List<Contact> contacts = q.find();
+
+        if(contacts.size() > 0){
+            sentByTextView.setText("Sent by: " + contacts.get(0).getDisplayName());
+        }
+        else {
+            sentByTextView.setText("No user found");
+            openButton.setVisibility(View.INVISIBLE);
+        }
+    }
 
 
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
@@ -205,8 +217,6 @@ public class DeepLinkActivity extends AppCompatActivity implements
             places.release();
         }
     };
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
