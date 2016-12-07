@@ -1,2 +1,28 @@
-MVP pattern: Model View Presenter
-Repository pattern: intended to create an abstraction layer between the data access layer and the business logic layer of an application
+**Task:**
+
+Create a social app for sharing a location’s information with friends. The app must utilize Google Maps and Google’s Places API to share and display Place details with any of a user’s contacts.
+
+**Required Features:**
+
+- List a user’s contacts from their phone
+
+- Send and receive Google Place information to any of a user’s contacts (share through email, sms, etc)
+
+- For each of a user’s contacts, maintain the history for each place sent to or received from that user.
+
+- Allow users to view details of places
+
+- Include deep-links in messages in order to display received Place information, or to navigate to relevant sections of the app.
+
+- Allow users to view selected places as markers on Google Maps.
+
+- Include an autocomplete search bar for places
+
+
+**Libraries Used:**
+
+- Google Play Services
+- Realm
+- Gson
+- Contacts
+- Permiso
