@@ -39,6 +39,7 @@ Because of Time constrains this are a list of nice to haves:
 - encrypt Phone Number (when sharing number, in deep link)
 - Onboarding Activity (show the user how to use the App)
 - Beer :beers: :beers: :beers: :beers: :beers:
+- Coffee :coffee: :coffee: :coffee: :coffee: :coffee:  to finish this nice to haves
 
 
 
