@@ -21,8 +21,10 @@ Create a social app for sharing a location’s information with friends. The app
 
 **Libraries Used:**
 
-- Google Play Services
-- Realm
-- Gson
-- Contacts
-- Permiso
+
+
+*  [Google Play Services](https://developers.google.com/android/guides/overview) Maps and Location
+*  [Realm](https://realm.io/news/realm-for-android/) Local Data Storage
+*  [Gson](https://github.com/google/gson) Serializer
+*  [Contacts](https://github.com/tamir7/Contacts) Contacts Manipulation
+*  [Permiso](https://github.com/greysonp/permiso) Permissions
