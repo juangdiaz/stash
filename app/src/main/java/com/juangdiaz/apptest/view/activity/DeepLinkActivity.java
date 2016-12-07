@@ -50,15 +50,15 @@ public class DeepLinkActivity extends AppCompatActivity implements
 
     private Realm realm;
 
-    private GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient googleApiClient;
 
     private TextView sentByTextView;
-    private TextView mNameTextView;
-    private TextView mAddressTextView;
-    private TextView mIdTextView;
-    private TextView mPhoneTextView;
-    private TextView mWebTextView;
-    private TextView mAttTextView;
+    private TextView textViewName;
+    private TextView textViewAddress;
+    private TextView textViewId;
+    private TextView textViewPhone;
+    private TextView textViewWeb;
+    private TextView textViewAtt;
 
 
     @Override
@@ -75,7 +75,8 @@ public class DeepLinkActivity extends AppCompatActivity implements
 
         realm = Realm.getDefaultInstance();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(DeepLinkActivity.this)
+        //init google API Client
+        googleApiClient = new GoogleApiClient.Builder(DeepLinkActivity.this)
                 .addApi(com.google.android.gms.location.places.Places.GEO_DATA_API)
                 .enableAutoManage(this, R.string.google_geo_api_key, this)
                 .addConnectionCallbacks(this)
@@ -83,14 +84,15 @@ public class DeepLinkActivity extends AppCompatActivity implements
 
 
         sentByTextView = (TextView) findViewById(R.id.text_sent_by);
-        mNameTextView = (TextView) findViewById(R.id.name);
-        mAddressTextView = (TextView) findViewById(R.id.address);
-        mIdTextView = (TextView) findViewById(R.id.place_image);
-        mPhoneTextView = (TextView) findViewById(R.id.phone);
-        mWebTextView = (TextView) findViewById(R.id.web);
-        mAttTextView = (TextView) findViewById(R.id.att);
+        textViewName = (TextView) findViewById(R.id.name);
+        textViewAddress = (TextView) findViewById(R.id.address);
+        textViewId = (TextView) findViewById(R.id.place_image);
+        textViewPhone = (TextView) findViewById(R.id.phone);
+        textViewWeb = (TextView) findViewById(R.id.web);
+        textViewAtt = (TextView) findViewById(R.id.att);
         Button openButton = (Button) findViewById(R.id.save_button);
 
+        //Get date from Deep Link
         Intent intent = getIntent();
         Uri data = intent.getData();
 
@@ -114,7 +116,7 @@ public class DeepLinkActivity extends AppCompatActivity implements
             place.setName(data.getQueryParameter("placename")) ;
         }
 
-
+        //Query contacts
         Query q = Contacts.getQuery();
         q.whereContains(Contact.Field.PhoneNumber, phoneNumber);
         List<Contact> contacts = q.find();
@@ -129,7 +131,7 @@ public class DeepLinkActivity extends AppCompatActivity implements
 
         //Fetch data from Places API
         PendingResult<PlaceBuffer> placeResult = com.google.android.gms.location.places.Places.GeoDataApi
-                .getPlaceById(mGoogleApiClient, place.getPlaceid());
+                .getPlaceById(googleApiClient, place.getPlaceid());
         placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
         Log.i(LOG_TAG, "Fetching details for ID: " + place.getPlaceid());
 
@@ -191,13 +193,13 @@ public class DeepLinkActivity extends AppCompatActivity implements
             final Place place = places.get(0);
             CharSequence attributions = places.getAttributions();
 
-            mNameTextView.setText(Html.fromHtml(place.getName() + ""));
-            mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
-            mIdTextView.setText(Html.fromHtml(place.getId() + ""));
-            mPhoneTextView.setText(Html.fromHtml(place.getPhoneNumber() + ""));
-            mWebTextView.setText(place.getWebsiteUri() + "");
+            textViewName.setText(Html.fromHtml(place.getName() + ""));
+            textViewAddress.setText(Html.fromHtml(place.getAddress() + ""));
+            textViewId.setText(Html.fromHtml(place.getId() + ""));
+            textViewPhone.setText(Html.fromHtml(place.getPhoneNumber() + ""));
+            textViewWeb.setText(place.getWebsiteUri() + "");
             if (attributions != null) {
-                mAttTextView.setText(Html.fromHtml(attributions.toString()));
+                textViewAtt.setText(Html.fromHtml(attributions.toString()));
             }
             //Release buffer
             places.release();

@@ -71,15 +71,18 @@ public class SentHistoryActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
+            //Get users Phone number from Realm
            User user = (User) bundle.getSerializable(PARAM_USER);
             phoneNumber = user.getPhoneNumb();
         }
         else {
+            //Get users Phone number
             TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 
             phoneNumber = tm.getLine1Number();
         }
 
+        //Get user History from Realm
         final User userHistory = realm.where(User.class).equalTo("phoneNumb", phoneNumber.replace("+", "")).findFirst();
 
         if(userHistory != null) {
@@ -90,7 +93,6 @@ public class SentHistoryActivity extends AppCompatActivity {
             Toast.makeText(this, "There is no user data", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
         }
-
     }
 
     public void displayUsers(List<Places> userHistory) {
@@ -119,7 +121,7 @@ public class SentHistoryActivity extends AppCompatActivity {
     protected void onDestroy() {
 
         super.onDestroy();
-
+        //Close Realm prevent memory leak
         realm.close();
     }
 

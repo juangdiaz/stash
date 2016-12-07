@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity  implements UserView {
 
         ((BaseApplication) this.getApplication()).getComponent().inject(this);
 
+        //Setting Activity for Permissions
         Permiso.getInstance().setActivity(this);
 
         progressBar= (ProgressBar) findViewById(R.id.progress_bar);
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity  implements UserView {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(false);
 
-        //Request Permissions,
+        //Request Permissions
         askPermissions();
 
 
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity  implements UserView {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Display Places
                 Intent intent = new Intent(MainActivity.this, PlacesActivity.class);
                 startActivity(intent);
             }

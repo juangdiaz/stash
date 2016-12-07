@@ -56,8 +56,8 @@ public class PlacesActivity extends AppCompatActivity {
     private static final int REQUEST_PLACE_PICKER = 3;
     private static final String TAG = "PlacesActivity";
 
-    private TextView mPlaceDetailsText;
-    private TextView mPlaceAttribution;
+    private TextView textViewPlaceDetails;
+    private TextView textViewPlaceAttribution;
     private TextView textViewSelectedLocation;
 
     private FloatingActionButton fab;
@@ -77,6 +77,7 @@ public class PlacesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //Get Realm Instance
         realm = Realm.getDefaultInstance();
 
         // Open the autocomplete activity when the button is clicked.
@@ -103,10 +104,9 @@ public class PlacesActivity extends AppCompatActivity {
         });
 
         // Retrieve the TextViews that will display details about the selected place.
-        mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
-        mPlaceAttribution = (TextView) findViewById(R.id.place_attribution);
+        textViewPlaceDetails = (TextView) findViewById(R.id.place_details);
+        textViewPlaceAttribution = (TextView) findViewById(R.id.place_attribution);
         textViewSelectedLocation = (TextView) findViewById(R.id.selected_place);
-
         textViewSelectedLocation.setVisibility(View.INVISIBLE);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -115,6 +115,7 @@ public class PlacesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Get users Phone number
                 TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 
                 myNumber = tm.getLine1Number();
@@ -132,6 +133,7 @@ public class PlacesActivity extends AppCompatActivity {
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
+                    //Share Place
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
                     sendIntent.putExtra(Intent.EXTRA_TEXT,
@@ -156,6 +158,7 @@ public class PlacesActivity extends AppCompatActivity {
 
             @Override
             public void execute(Realm realm) {
+                // Store into Realm
                 Places myPlace = new Places();
                 myPlace.setPlaceid(place.getId());
                 myPlace.setDateSent(date);
@@ -234,15 +237,15 @@ public class PlacesActivity extends AppCompatActivity {
                 Log.i(TAG, "Place Selected: " + place.getName());
 
                 // Format the place's details and display them in the TextView.
-                mPlaceDetailsText.setText(formatPlaceDetails(getResources(), place.getName(),
+                textViewPlaceDetails.setText(formatPlaceDetails(getResources(), place.getName(),
                         place.getAddress(), place.getPhoneNumber(), place.getWebsiteUri()));
 
                 // Display attributions if required.
                 CharSequence attributions = place.getAttributions();
                 if (!TextUtils.isEmpty(attributions)) {
-                    mPlaceAttribution.setText(Html.fromHtml(attributions.toString()));
+                    textViewPlaceAttribution.setText(Html.fromHtml(attributions.toString()));
                 } else {
-                    mPlaceAttribution.setText("");
+                    textViewPlaceAttribution.setText("");
                 }
 
                 fab.setVisibility(View.VISIBLE);
@@ -297,7 +300,7 @@ public class PlacesActivity extends AppCompatActivity {
     protected void onDestroy() {
 
         super.onDestroy();
-
+        //Close Realm prevent memory leak
         realm.close();
     }
 }
