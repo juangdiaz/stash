@@ -32,13 +32,23 @@ Create a social app for sharing a location’s information with friends. The app
 
 Images
 =======
+**Contacts**
+<img src="http://imgur.com/bp8zeFs.png" width="270" height="480">
 
-![ScreenShot](http://imgur.com/bp8zeFs.png)
-![ScreenShot](http://imgur.com/RwrERAq.png)
-![ScreenShot](http://imgur.com/Cealm2Z.png)
-![ScreenShot](http://imgur.com/BOp4qO5.png)
-![ScreenShot](http://imgur.com/1wgDrzX.png)
-![ScreenShot](http://imgur.com/3VlNG6Q.png)
-![ScreenShot](http://imgur.com/iN6iP9z.png)
-![ScreenShot](http://imgur.com/Ttwyk7C.png)
-![ScreenShot](http://imgur.com/ybsPACg.png)
+**Share Location Screen**
+<img src="http://imgur.com/RwrERAq.png" width="270" height="480">
+**Share Location API**
+<img src="http://imgur.com/Cealm2Z.png" width="270" height="480">
+**Selected Location**
+<img src="http://imgur.com/BOp4qO5.png" width="270" height="480">
+**Location Display**
+<img src="http://imgur.com/1wgDrzX.png" width="270" height="480">
+**Sharing Location**
+<img src="http://imgur.com/3VlNG6Q.png" width="270" height="480">
+**Sharing Location Via Email**
+<img src="http://imgur.com/iN6iP9z.png" width="270" height="480">
+**User History**
+<img src="http://imgur.com/Ttwyk7C.png" width="270" height="480">
+**Location Details with Google maps Marker**
+<img src="http://imgur.com/ybsPACg.png" width="270" height="480">
+
