@@ -35,9 +35,9 @@ Create a social app for sharing a location’s information with friends. The app
 
 Because of Time constrains this are a list of nice to haves:
 
-- MVP, (Mokito and Robelectric) and Dagger 2. 
+- MVP, (Mokito and Robelectric) and Dagger 2. -> started in a different branch 
 - encrypt Phone Number (when sharing number, in deep link)
-- Onboarding Activity (show the user how to use the App
+- Onboarding Activity (show the user how to use the App)
 - Beer :beers: :beers: :beers: :beers: :beers:
 
 
