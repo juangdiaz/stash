@@ -80,12 +80,12 @@ public class PlaceDetailsActivity extends AppCompatActivity implements
         //Fetch data from Places API
         PendingResult<PlaceBuffer> placeResult = com.google.android.gms.location.places.Places.GeoDataApi
                 .getPlaceById(googleApiClient, placeid);
-        placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+        placeResult.setResultCallback(updatePlaceDetailsCallback);
         Log.i(LOG_TAG, "Fetching details for ID: " + placeid);
 
     }
 
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+    private ResultCallback<PlaceBuffer> updatePlaceDetailsCallback
             = new ResultCallback<PlaceBuffer>() {
 
         @Override

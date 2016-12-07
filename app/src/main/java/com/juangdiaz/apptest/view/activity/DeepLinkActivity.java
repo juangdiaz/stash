@@ -142,7 +142,7 @@ public class DeepLinkActivity extends AppCompatActivity implements
         //Fetch data from Places API
         PendingResult<PlaceBuffer> placeResult = com.google.android.gms.location.places.Places.GeoDataApi
                 .getPlaceById(googleApiClient, place.getPlaceid());
-        placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+        placeResult.setResultCallback(updatePlaceDetailsCallback);
         Log.i(LOG_TAG, "Fetching details for ID: " + place.getPlaceid());
     }
 
@@ -188,7 +188,7 @@ public class DeepLinkActivity extends AppCompatActivity implements
     }
 
 
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+    private ResultCallback<PlaceBuffer> updatePlaceDetailsCallback
             = new ResultCallback<PlaceBuffer>() {
 
         @Override
