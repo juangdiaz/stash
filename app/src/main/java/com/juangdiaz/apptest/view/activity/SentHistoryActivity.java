@@ -13,13 +13,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.juangdiaz.apptest.Injector;
 import com.juangdiaz.apptest.R;
 import com.juangdiaz.apptest.adapter.HistoryListAdapter;
 import com.juangdiaz.apptest.model.Places;
 import com.juangdiaz.apptest.model.User;
+import com.juangdiaz.apptest.repository.DatabaseRealm;
 
 import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 
@@ -29,6 +33,8 @@ import io.realm.Realm;
 public class SentHistoryActivity extends AppCompatActivity {
 
     public final static String PARAM_USER = "PARAM_USER";
+
+    @Inject DatabaseRealm databaseRealm;
 
     private RecyclerView recyclerView;
     private HistoryListAdapter historyListAdapter;
@@ -49,9 +55,10 @@ public class SentHistoryActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        realm = Realm.getDefaultInstance();
+        //Get Realm Instance
+        Injector.getApplicationComponent().inject(this);
 
-
+        realm = databaseRealm.getRealmInstance();
 
         progressBar= (ProgressBar) findViewById(R.id.progress_bar);
 
@@ -122,7 +129,7 @@ public class SentHistoryActivity extends AppCompatActivity {
 
         super.onDestroy();
         //Close Realm prevent memory leak
-        realm.close();
+        databaseRealm.close();
     }
 
 
