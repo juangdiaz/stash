@@ -24,13 +24,17 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
+import com.juangdiaz.apptest.Injector;
 import com.juangdiaz.apptest.R;
 import com.juangdiaz.apptest.model.Places;
 import com.juangdiaz.apptest.model.User;
+import com.juangdiaz.apptest.repository.DatabaseRealm;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -43,6 +47,9 @@ public class DeepLinkActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks  {
 
     private static final String LOG_TAG = "DeepLinkActivity";
+
+
+    @Inject DatabaseRealm databaseRealm;
 
     String phoneNumber;
     Places place;
@@ -73,7 +80,9 @@ public class DeepLinkActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        realm = Realm.getDefaultInstance();
+        Injector.getApplicationComponent().inject(this);
+
+        realm = databaseRealm.getRealmInstance();
 
         //init google API Client
         googleApiClient = new GoogleApiClient.Builder(DeepLinkActivity.this)
@@ -239,7 +248,7 @@ public class DeepLinkActivity extends AppCompatActivity implements
 
         super.onDestroy();
 
-        realm.close();
+        databaseRealm.close();
     }
 
     @Override

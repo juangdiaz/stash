@@ -28,9 +28,11 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.juangdiaz.apptest.Injector;
 import com.juangdiaz.apptest.R;
 import com.juangdiaz.apptest.model.Places;
 import com.juangdiaz.apptest.model.User;
+import com.juangdiaz.apptest.repository.DatabaseRealm;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -38,6 +40,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -55,6 +59,8 @@ public class PlacesActivity extends AppCompatActivity {
     private static final int  SUCCESSFUL_SHARE_REQUEST = 2;
     private static final int REQUEST_PLACE_PICKER = 3;
     private static final String TAG = "PlacesActivity";
+
+    @Inject DatabaseRealm databaseRealm;
 
     private TextView textViewPlaceDetails;
     private TextView textViewPlaceAttribution;
@@ -78,7 +84,9 @@ public class PlacesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Get Realm Instance
-        realm = Realm.getDefaultInstance();
+        Injector.getApplicationComponent().inject(this);
+
+        realm = databaseRealm.getRealmInstance();
 
         // Open the autocomplete activity when the button is clicked.
         Button openButton = (Button) findViewById(R.id.open_button);
@@ -301,6 +309,6 @@ public class PlacesActivity extends AppCompatActivity {
 
         super.onDestroy();
         //Close Realm prevent memory leak
-        realm.close();
+        databaseRealm.close();
     }
 }

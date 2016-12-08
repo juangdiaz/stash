@@ -22,7 +22,7 @@ Create a social app for sharing a location’s information with friends. The app
 **Libraries Used:**
 
 
-
+*  [Dagger 2](https://google.github.io/dagger/) Dependency Injection
 *  [Google Play Services](https://developers.google.com/android/guides/overview) Maps and Location
 *  [Realm](https://realm.io/news/realm-for-android/) Local Data Storage
 *  [Gson](https://github.com/google/gson) Serializer
@@ -35,7 +35,7 @@ Create a social app for sharing a location’s information with friends. The app
 
 Because of Time constrains this are a list of nice to haves:
 
-- MVP, (Mokito and Robelectric) and Dagger 2. -> started in a different branch 
+- MVP, (Mokito and Robelectric) 
 - encrypt Phone Number (when sharing number, in deep link)
 - Onboarding Activity (show the user how to use the App)
 - Beer :beers: :beers: :beers: :beers: :beers:
